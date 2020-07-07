@@ -1,0 +1,79 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    {% from "includes/_formhelpers.html" import render_field %}
+    <form method="POST" action="">
+        <table style="width: 100%;">
+            <tr>
+                <td>
+                    <div class="card" style="width:30%; height: 12%;">
+                        <!--img class="card-img-top" src="https://www.vippng.com/png/full/8-87659_clipart-big-image-png-transparent-background-user-icon.png" alt="Card image" style="width:100%" -->
+                        <img class="card-img-top" src="https://cdn1.iconfinder.com/data/icons/user-pictures/101/malecostume-512.png"
+                            alt="Card image" style="width:100%">
+                        <div class="card-body" align="left">
+                            <h4 class="card-title">{{session.name}}</h4>
+                            <p class="card-text">{{session.email}}</p>
+                        </div>
+                    </div>
+                </td>
+                <td >
+                    <h1> Edit Profile </h1>
+                </td>
+            </tr>
+        </table>
+        {% if session['cid'] == None  %}
+            <hr>
+                <div class="form-group">
+                    {{render_field(form.Address, class_="form-control")}}
+                </div> 
+                <div class="form-group">
+                    {{render_field(form.PhoneNumber, class_="form-control")}}
+                </div>
+            <hr>
+                <label><b>Phone Numbers</b></label><br>
+                <div class="form-group">
+                    {{render_field(form.Airtel_PhoneNumber, class="form-control")}}
+                </div>
+            <hr>
+                <label><b>Other Bill Numbers</b></label><br>
+                <div class="form-group">
+                    {{render_field(form.PGVCL, class="form-control")}}
+                </div>
+                <div class="form-group">
+                    {{render_field(form.GAS, class="form-control")}}
+
+                </div>
+                <div class="form-group">
+                    {{render_field(form.d2h, class="form-control")}}
+                </div>
+                <p><input type="submit" class="btn btn-dark" value="Submit"></p>
+        {% else %}
+            <hr>
+            <div class="form-group">
+                {{render_field(form.Address, value=session['address'], class_="form-control")}}
+            </div>
+            <div class="form-group">
+                {{render_field(form.PhoneNumber, value=session['phone_number'], class_="form-control")}}
+            </div>
+            <hr>
+            <label><b>Phone Numbers</b></label><br>
+            <div class="form-group">
+                {{render_field(form.Airtel_PhoneNumber, value=session['cid'][1], class="form-control")}}
+            </div>
+            <hr>
+            <label><b>Other Bill Numbers</b></label><br>
+            <div class="form-group">
+                {{render_field(form.PGVCL, value=session['cid'][2], class="form-control")}}
+            </div>
+            <div class="form-group">
+                {{render_field(form.GAS, value=session['cid'][4], class="form-control")}}
+            
+            </div>
+            <div class="form-group">
+                {{render_field(form.d2h, value=session['cid'][3], class="form-control")}}
+            </div>
+            <p><input type="submit" class="btn btn-dark" value="Submit"></p>
+        {% endif %}
+    </form>
+
+{% endblock %}

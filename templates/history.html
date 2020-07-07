@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+    <h2> History </h2>
+    <table class="table table-hover table-striped table-success">
+        <thead class="bg-success">
+            <tr>
+                <th>Order No</th>
+                <th>Total Amount Paid</th>
+                <th>Bill Date</th>
+                <th>Detailed Report</th>
+            </tr>
+        </thead>
+            {% for temphis in tempHistory %}
+            <tr>
+                <td>{{temphis[0]}}</td>
+                <td>{{temphis[6]}}</td>
+                <td>{{temphis[7]}}</td>
+                <td><a class="text-success" onclick="window.location.href='{{ url_for('shistory', id=temphis[0]) }}';">Click on me!!</a></td>
+            </tr>
+            {% endfor %}  
+    </table>
+
+{% endblock %}

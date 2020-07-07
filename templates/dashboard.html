@@ -1,0 +1,149 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    <!-- This is for the submit button click-->
+    <!--script>
+        $(document).ready(function () {
+            $("#paybtn").click(function () {
+                $("#payment").submit(); // Submit the form
+            });
+        });
+    </script -->
+    <style type="text/css">
+        /* Base for label styling */
+        [type="checkbox"]:not(:checked),
+        [type="checkbox"]:checked {
+        position: absolute;
+        left: -9999px;
+        }
+        [type="checkbox"]:not(:checked) + label,
+        [type="checkbox"]:checked + label {
+        position: relative;
+        padding-left: 1.95em;
+        cursor: pointer;
+        }
+
+        /* checkbox aspect */
+        [type="checkbox"]:not(:checked) + label:before,
+        [type="checkbox"]:checked + label:before {
+        content: '';
+        position: absolute;
+        left: 0; top: 0;
+        width: 1.25em; height: 1.25em;
+        border: 2px solid #000000;
+        background: #fff;
+        border-radius: 4px;
+        box-shadow: inset 0 1px 3px rgba(0,0,0,.1);
+        }
+        /* checked mark aspect */
+        [type="checkbox"]:not(:checked) + label:after,
+        [type="checkbox"]:checked + label:after {
+        content: '\2713\0020';
+        position: absolute;
+        top: .15em; left: .22em;
+        font-size: 1.3em;
+        line-height: 0.8;
+        color: #000000;
+        transition: all .2s;
+        font-family: 'Lucida Sans Unicode', 'Arial Unicode MS', Arial;
+        }
+        /* checked mark aspect changes */
+        [type="checkbox"]:not(:checked) + label:after {
+        opacity: 0;
+        transform: scale(0);
+        }
+    </style>
+    <h1> Dashboard </h1>
+    <h3> <small>Welcome {{session.name}} </small> </h3>
+    <hr>
+    <form action='' method="POST">
+        <h5> Please Select bills </h5>
+        <div class="form-group">
+            <div>
+                <input type="checkbox" name="selectNbills" id="airtel" value="airtel">
+                <label for="airtel">Airtel</label>
+            </div>
+            <div>
+                <input type="checkbox" name="selectNbills" id="pgvcl" value="pgvcl">
+                <label for="pgvcl">PGVCL</label>
+            </div>
+            <div>
+                <input type="checkbox" name="selectNbills" id="gas" value="gas">
+                <label for="gas">GAS</label>
+            </div>
+            <div>
+                <input type="checkbox" name="selectNbills" id="d2h" value="d2h">
+                <label for="d2h">D2H</label>
+            </div>
+            <input type="submit" class="btn btn-dark" value="Submit"/>
+        </div>
+    </form>
+    <hr>
+    {% if session.boolCheck == 1 %}
+    <form action="/payment" method="POST" id="payment">
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered table-striped table-dark">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>No</th>
+                        <th>Company</th>
+                        <th>Bill Number</th>
+                        <th>Bill Date</th>
+                        <th>Bill Amount</th>
+                    </tr>
+                </thead>
+                {% for i in range(session.lenCheck) %}
+                <tr>
+                    <td>{{ i+1 }}</td>
+                    <td>{{ session['GenerateBills'][i] }}</td>
+                    <td>{{ session['GenerateBillNumbers'][i] }}</td>
+                    <td>{{ i }}</td>
+                    <td>{{ session['GenerateBillAmount'][i] }}</td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <th colspan="4">Total</th>
+                    <th>{{ session['TotalSelectedBillAmount'] }}</th>
+                </tr>
+                <!--This Custome button payment>
+                <tr>
+                    <td colspan="5"><center><button type="button" class="btn btn-light" id="paybtn" value="Payment" onclick="window.location.href='{{ url_for('payment') }}';">Make Payment</button></center></td>
+                </tr-->
+                <!--This is for payment button paypal-->
+                <tr>
+                    <td colspan="5"><center><div style="width: 25%; height: 20%;" id="paypal-button-container"></div></center></td>
+                </tr>
+            </table>
+        </div>
+    </form>
+
+
+            <!-- This is for Paypal BUTTON -->
+            <script
+                src="https://www.paypal.com/sdk/js?client-id=AajKKnWX_2OOTesQptidbUCZYfDK9WT9phM8Rz4tLX65zj8QaRihy7fZdG_SQDqGiJisNzW57Pt6WUiE"> // Required. Replace SB_CLIENT_ID with your sandbox client ID.</script>
+            <script>
+                paypal.Buttons({
+                    createOrder: function (data, actions) {
+                        // This function sets up the details of the transaction, including the amount and line item details.
+                        return actions.order.create({
+                            purchase_units: [{
+                                amount: {
+                                    value: '0.01'
+                                }
+                            }]
+                        });
+                    },
+                    onApprove: function (data, actions) {
+                        // This function captures the funds from the transaction.
+                        return actions.order.capture().then(function (details) {
+                            // This function shows a transaction success message to your buyer.
+                            alert('Transaction completed by ' + details.payer.name.given_name);
+                        });
+                    }
+                }).render('#paypal-button-container');
+              //This function displays Smart Payment Buttons on your web page.
+            </script>
+
+    {% endif %}
+
+{% endblock %}

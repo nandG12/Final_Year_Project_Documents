@@ -1,0 +1,31 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+    <h1>Payment</h1>
+    <form action="" method="POST">  
+    
+        <h4>Payment Confirmation</h4>
+        <p>Are you sure you want to contiune</p>
+        <button type="submit" class="btn btn-light" id="hist-btn" value="history">Confirm</button>
+
+    </form>
+    <!--h3>Redirecting you to the merchant</h3>
+    <h3>Please do not refresh</h3>
+    <form action="https://securegw-stage.paytm.in" method="POST" name="paytm">
+        {% for key, value in param_dict.items() %}
+        <input type="hidden" name="{{key}}" value="{{value}}">
+        {% endfor %}
+        <button type="button" id="submitbtn">Click to GO</button>
+    </form-->
+    <script>
+        $(document).ready(function () {
+            console.log("HERE");
+            $("#submitbtn").click(function () {
+                console.log("DONE");
+                $("#paytm").submit(); // Submit the form
+            });
+        });
+    </script>
+
+{% endblock %}

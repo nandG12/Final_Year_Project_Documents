@@ -1,0 +1,87 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+
+   
+
+<h3> User Information </h3><hr>
+    {% if session.logged_in %}
+    <table style="width: 100%;">
+        <tr>
+            <td align="center" style="width: 50%;">
+                    <div class="card" style="width:50%;">
+                        <!--img class="card-img-top" src="https://www.vippng.com/png/full/8-87659_clipart-big-image-png-transparent-background-user-icon.png" alt="Card image" style="width:100%" -->
+                        <img class="card-img-top" src="https://cdn1.iconfinder.com/data/icons/user-pictures/101/malecostume-512.png"
+                            alt="Card image" style="width:100%">
+                        <div class="card-body">
+                            <h4 class="card-title">{{session.name}}</h4>
+                            <p class="card-text">{{session.email}}</p>
+                            
+                        </div>
+                    </div>
+            </td>
+            <td align="center" style="width: 50%;">
+                    <form method="POST" action="editUser">
+                        <div class="info">
+                            <table>
+                                <tr>
+                                    <td><label> Name :</label></td>
+                                    <td><input type="text" value='{{session.name}}'readonly style="color:blanchedalmond; background: linear-gradient(to top left, #434343 0%,  #000000 100%)"><br></td>
+                                </tr>
+                                <tr>
+                                    <td><label> Email ID :</label></td>
+                                    <td><input type="text" name=emailid value='{{session.email}}' readonly style="color:blanchedalmond; background: linear-gradient(to top left, #434343 0%,  #000000 100%)"><br></td>
+                                </tr>
+                                <tr>
+                                    <td><label> Phone Number:</label></td>
+                                    <td><input type="text" name=phonenumber placeholder="Phone Number"><br></td>
+                                </tr>
+                                <tr>
+                                    <td><label> Address :</label></td>
+                                    <td><input type="text" name=address placeholder="Address"><br></td>
+                                </tr>
+                                <tr>
+                                    <td><label> Birth Date :</label></td>
+                                    <td><input type="date" name=birthdate><br></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <hr>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Airtel Phone Number:</td>
+                                    <td><input class="fname" type="text" name="airtel" placeholder="Airtel Phone Number"><br></td>
+                                </tr>
+                                <tr>
+                                    <td>PGVCL Customer ID:</td>
+                                    <td><input type="text" name="pgvcl" placeholder="PGVCL Customer ID"><br></td>
+                                </tr>
+                                <tr>
+                                    <td>GAS GPSC Customer ID:</td>
+                                    <td><input type="text" name="gas" placeholder="GAS GPSC Customer ID"><br></td>
+                                </tr>
+                                <tr>
+                                    <td>D2H Customer ID:</td>
+                                    <td><input type="text" name="d2h" placeholder="D2H Customer ID"><br></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <hr>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" align="center"><button id="edit" class="btn btn-primary" >Edit</button><br></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </form>
+            </td>
+        </tr>
+    </table>
+
+    {% else %}
+        <h4>Login in First</h4>
+    {% endif %}
+{% endblock %}
